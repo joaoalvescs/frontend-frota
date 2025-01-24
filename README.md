@@ -4,11 +4,11 @@ A empresa XWZ precisa de um sistema simples para gerenciar veículos de uma frot
 
 ## Requisitos
 
-É necessário que o Node.js esteja previamente instalado no computador.
+É necessário que o Node.js esteja previamente instalado:
 
 https://nodejs.org/pt/learn/getting-started/introduction-to-nodejs
 
-O gerenciador de pacotes utilizado para a instalação do projeto é o Yarn.
+O gerenciador de pacotes utilizado para a instalação é o Yarn:
 
 https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable
 
