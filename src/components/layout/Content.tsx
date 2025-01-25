@@ -1,20 +1,43 @@
+import React, { useState } from 'react'
 import { MdDelete, MdEdit } from 'react-icons/md'
 import {
   AddButton,
   ContentIndex,
   ControlsContainer,
   FilterSelect,
+  OkButton,
   Table,
   TableContainer,
 } from '../../layouts/content'
+import Modal from './Modal'
 
 export default function Content() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [formData, setFormData] = useState({
+    modelo: '',
+    fabricante: '',
+    ano: '',
+    preco: '',
+  })
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
+
+  const handleAddVehicle = () => {
+    console.log('Dados do veículo:', formData)
+    setIsModalOpen(false)
+  }
+
   return (
     <>
       <ContentIndex>
         <TableContainer>
           <ControlsContainer>
-            <AddButton>+ ADICIONAR</AddButton>
+            <AddButton onClick={() => setIsModalOpen(true)}>
+              + ADICIONAR
+            </AddButton>
             <FilterSelect>
               <option value="" disabled selected>
                 Filtrar
@@ -23,6 +46,7 @@ export default function Content() {
               <option value="ano">Ano</option>
               <option value="fabricante">Fabricante</option>
             </FilterSelect>
+            <OkButton>Ok</OkButton>
           </ControlsContainer>
           <Table>
             <thead>
@@ -48,46 +72,18 @@ export default function Content() {
                   <MdDelete />
                 </td>
               </tr>
-              <tr>
-                <td>Civic</td>
-                <td>Honda</td>
-                <td>2021</td>
-                <td>R$ 140.000</td>
-                <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
-                  <MdEdit />
-                </td>
-                <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
-                  <MdDelete />
-                </td>
-              </tr>
-              <tr>
-                <td>Golf</td>
-                <td>Volkswagen</td>
-                <td>2020</td>
-                <td>R$ 130.000</td>
-                <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
-                  <MdEdit />
-                </td>
-                <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
-                  <MdDelete />
-                </td>
-              </tr>
-              <tr>
-                <td>Ka</td>
-                <td>Ford</td>
-                <td>2019</td>
-                <td>R$ 50.000</td>
-                <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
-                  <MdEdit />
-                </td>
-                <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
-                  <MdDelete />
-                </td>
-              </tr>
             </tbody>
           </Table>
         </TableContainer>
       </ContentIndex>
+      <Modal
+        isOpen={isModalOpen}
+        title="Adicionar veículo"
+        formData={formData}
+        onClose={() => setIsModalOpen(false)}
+        onSave={handleAddVehicle}
+        onInputChange={handleInputChange}
+      />
     </>
   )
 }
