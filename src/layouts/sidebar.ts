@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -6,7 +7,7 @@ export const Container = styled.div`
 `
 
 export const SideBarContainer = styled.div`
-  width: 250px;
+  width: 8vw;
   background-color: #2c3e50;
   color: #ecf0f1;
   display: flex;
@@ -23,12 +24,13 @@ export const SideBarTitle = styled.h1`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+  text-align: center; /* Alinha o texto ao centro */
 `
 
 export const MenuItem = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center; /* Alinha o conteúdo ao centro */
   width: 90%;
   padding: 10px 20px;
   margin: 10px 0;
@@ -40,4 +42,13 @@ export const MenuItem = styled.div`
   &:hover {
     background-color: #34495e;
   }
+`
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Espaçamento entre ícone e texto */
 `

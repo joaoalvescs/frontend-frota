@@ -1,40 +1,29 @@
 import { MdDelete, MdEdit } from 'react-icons/md'
-import styled from 'styled-components'
-import { ContentIndex, Table } from '../../layouts/content'
-
-// Contêiner para alinhar o botão com a tabela
-const TableContainer = styled.div`
-  width: 70vw; /* Mesma largura da tabela */
-  margin: 0 auto; /* Centraliza a tabela */
-  position: relative; /* Para posicionamento absoluto do botão */
-`
-
-// Estilização do botão
-const AddButton = styled.button`
-  position: absolute;
-  top: -60px; /* Acima da tabela */
-  left: 0; /* Alinhado à direita */
-  background-color: #2c3e50;
-  color: #ecf0f1;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #34495e;
-  }
-`
+import {
+  AddButton,
+  ContentIndex,
+  ControlsContainer,
+  FilterSelect,
+  Table,
+  TableContainer,
+} from '../../layouts/content'
 
 export default function Content() {
   return (
     <>
       <ContentIndex>
         <TableContainer>
-          <AddButton>+ ADICIONAR</AddButton>
+          <ControlsContainer>
+            <AddButton>+ ADICIONAR</AddButton>
+            <FilterSelect>
+              <option value="" disabled selected>
+                Filtrar
+              </option>
+              <option value="modelo">Modelo</option>
+              <option value="ano">Ano</option>
+              <option value="fabricante">Fabricante</option>
+            </FilterSelect>
+          </ControlsContainer>
           <Table>
             <thead>
               <tr>

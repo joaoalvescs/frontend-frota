@@ -2,8 +2,9 @@ import { createBrowserRouter } from 'react-router-dom'
 
 import App from '../App'
 
-import Dashboard from '../pages/dashboard'
 import Error404 from '../pages/error404'
+import Carro from '../pages/carro'
+import Moto from '../pages/moto'
 
 export const routes = createBrowserRouter([
   {
@@ -12,7 +13,11 @@ export const routes = createBrowserRouter([
     errorElement: <Error404 />,
   },
   {
-    path: '/dashboard',
-    element: <Dashboard />,
+    path: '/carro',
+    element: <Carro />,
+  },
+  {
+    path: '/moto',
+    element: <Moto />,
   },
 ])
