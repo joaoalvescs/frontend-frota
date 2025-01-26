@@ -9,7 +9,7 @@ import {
   SaveButton,
 } from '../../layouts/content'
 
-interface ModalProps {
+interface ModalPropsMoto {
   isOpen: boolean
   title: string
   formData: {
@@ -17,13 +17,14 @@ interface ModalProps {
     fabricante: string
     ano: string
     preco: string
+    cilindrada: string
   }
   onClose: () => void
   onSave: () => void
   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const Modal: React.FC<ModalProps> = ({
+const Modal: React.FC<ModalPropsMoto> = ({
   isOpen,
   title,
   formData,
@@ -64,6 +65,13 @@ const Modal: React.FC<ModalProps> = ({
             name="preco"
             placeholder="Preço"
             value={formData.preco}
+            onChange={onInputChange}
+          />
+          <Input
+            type="number"
+            name="cilindrada"
+            placeholder="Cilindrada"
+            value={formData.cilindrada}
             onChange={onInputChange}
           />
           <ModalActions>

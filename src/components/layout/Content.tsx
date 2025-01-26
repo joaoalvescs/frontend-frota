@@ -10,23 +10,53 @@ import {
   TableContainer,
 } from '../../layouts/content'
 import Modal from './Modal'
+import { formatPrice } from '../../utils/formatDate'
 
 export default function Content() {
+  const currentYear = new Date().getFullYear()
+
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [formData, setFormData] = useState({
+
+  const initialFormData = {
     modelo: '',
     fabricante: '',
-    ano: '',
+    ano: currentYear,
     preco: '',
-  })
+    cilindrada: '',
+  }
+
+  const [formDataMoto, setFormDataMoto] = useState(initialFormData)
+
+  const handleCancel = () => {
+    setFormDataMoto(initialFormData)
+    setIsModalOpen(false)
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+
+    if (name === 'ano') {
+      const year = parseInt(value, 10)
+      if (!isNaN(year) && year >= 1930 && year <= 2100) {
+        setFormDataMoto({ ...formDataMoto, [name]: year })
+      }
+    } else if (name === 'preco') {
+      const formattedValue = formatPrice(value)
+      setFormDataMoto({ ...formDataMoto, [name]: formattedValue })
+    } else if (name === 'cilindrada') {
+      const cilindrada = parseFloat(value)
+      if (!isNaN(cilindrada) && cilindrada > 1) {
+        setFormDataMoto({ ...formDataMoto, [name]: value })
+      } else {
+        console.warn('Cilindrada deve ser maior que 1!')
+      }
+    } else {
+      setFormDataMoto({ ...formDataMoto, [name]: value })
+    }
   }
 
   const handleAddVehicle = () => {
-    console.log('Dados do veículo:', formData)
+    console.log('Dados do veículo:', formDataMoto)
     setIsModalOpen(false)
   }
 
@@ -64,7 +94,7 @@ export default function Content() {
                 <td>Corolla</td>
                 <td>Toyota</td>
                 <td>2022</td>
-                <td>R$ 150.000</td>
+                <td>R$ 150.000,00</td>
                 <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
                   <MdEdit />
                 </td>
@@ -79,8 +109,11 @@ export default function Content() {
       <Modal
         isOpen={isModalOpen}
         title="Adicionar veículo"
-        formData={formData}
-        onClose={() => setIsModalOpen(false)}
+        formData={{
+          ...formDataMoto,
+          ano: formDataMoto.ano.toString(),
+        }}
+        onClose={handleCancel}
         onSave={handleAddVehicle}
         onInputChange={handleInputChange}
       />

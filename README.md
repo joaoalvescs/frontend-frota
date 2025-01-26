@@ -31,3 +31,11 @@ Para executar a aplicação em um browser, digite o endereço:
 ```bash
   http://localhost:5173/
 ```
+
+## 🚀 Finalizado!!!
+
+Qualquer dúvidas estou à disposição através do e-mail:
+
+joaoalves.cs@gmail.com
+
+## 👊🏻 Obrigado!!!
