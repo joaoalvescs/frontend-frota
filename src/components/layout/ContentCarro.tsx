@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from 'react'
-
-import {
-  AddButton,
-  ContentIndex,
-  ControlsContainer,
-  FilterSelect,
-  OkButton,
-  TableContainer,
-} from '../../layouts/content'
-import { getMotos } from '../../services/moto'
-
-import Modal from './Modal'
-import TableMoto from './TableMoto'
-
+import React, { useState } from 'react'
 import { currentYear, formatPrice } from '../../utils/formatDate'
+import Modal from './Modal'
 
-export default function Content() {
+import Filter from './Filter'
+import Button from './AddButton'
+import TableCarro from './TableCarro'
+
+export interface Carro {
+  modelo: string
+  fabricante: string
+  ano: number
+  preco: string
+  quantidadePortas: number
+  tipoCombustivel: string
+}
+
+interface ContentProps {
+  carros: Carro[]
+}
+
+const ContentCarro: React.FC<ContentProps> = ({ carros }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [motos, setMotos] = useState([])
 
   const initialFormData = {
     modelo: '',
@@ -28,20 +31,6 @@ export default function Content() {
   }
 
   const [formDataMoto, setFormDataMoto] = useState(initialFormData)
-
-  useEffect(() => {
-    const fetchMotos = async () => {
-      try {
-        const motosData = await getMotos()
-        console.log('Motos:', motosData)
-        setMotos(motosData)
-      } catch (error) {
-        console.error('Erro ao buscar motos:', error)
-      }
-    }
-
-    fetchMotos()
-  }, [])
 
   const handleCancel = () => {
     setFormDataMoto(initialFormData)
@@ -78,28 +67,12 @@ export default function Content() {
 
   return (
     <>
-      <ContentIndex>
-        <TableContainer>
-          <ControlsContainer>
-            <AddButton onClick={() => setIsModalOpen(true)}>
-              + ADICIONAR
-            </AddButton>
-            <FilterSelect>
-              <option value="" disabled selected>
-                Filtrar
-              </option>
-              <option value="modelo">Modelo</option>
-              <option value="ano">Ano</option>
-              <option value="fabricante">Fabricante</option>
-            </FilterSelect>
-            <OkButton>Ok</OkButton>
-          </ControlsContainer>
-          <TableMoto motos={motos} />
-        </TableContainer>
-      </ContentIndex>
+      <Button setIsModalOpen={setIsModalOpen} />
+      <Filter />
+      <TableCarro carros={carros} />{' '}
       <Modal
         isOpen={isModalOpen}
-        title="Adicionar moto"
+        title="Adicionar carro"
         type="carro"
         formData={{
           ...formDataMoto,
@@ -112,3 +85,5 @@ export default function Content() {
     </>
   )
 }
+
+export default ContentCarro

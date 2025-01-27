@@ -1,28 +1,28 @@
 import React from 'react'
 import { MdDelete, MdEdit } from 'react-icons/md'
 import { Table } from '../../layouts/content'
-import { TableMotoProps } from '../../types/moto'
+import { TableCarroProps } from '../../types/carro'
 
-const TableMoto: React.FC<TableMotoProps> = ({ motos }) => {
+const TableCarro: React.FC<TableCarroProps> = ({ carros }) => {
   return (
     <Table>
       <thead>
         <tr>
           <th>Modelo</th>
           <th>Fabricante</th>
-          <th>Ano</th>
-          <th>Cilindradas</th>
+          <th>Combustível</th>
+          <th>Portas</th>
           <th>Editar</th>
           <th>Apagar</th>
         </tr>
       </thead>
       <tbody>
-        {motos.map((moto, index) => (
+        {carros.map((carro, index) => (
           <tr key={index}>
-            <td>{moto.modelo}</td>
-            <td>{moto.fabricante}</td>
-            <td>{moto.ano}</td>
-            <td>{moto.cilindrada}</td>
+            <td>{carro.modelo}</td>
+            <td>{carro.fabricante}</td>
+            <td>{carro.tipoCombustivel}</td>
+            <td>{carro.quantidadePortas}</td>
             <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
               <MdEdit />
             </td>
@@ -36,4 +36,4 @@ const TableMoto: React.FC<TableMotoProps> = ({ motos }) => {
   )
 }
 
-export default TableMoto
+export default TableCarro

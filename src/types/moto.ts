@@ -21,7 +21,7 @@ export interface Moto {
   fabricante: string
   ano: number
   preco: string
-  cilindrada: number
+  cilindrada: string
 }
 
 export interface TableMotoProps {
