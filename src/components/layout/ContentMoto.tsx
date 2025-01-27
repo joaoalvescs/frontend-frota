@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import { currentYear, formatPrice } from '../../utils/formatDate'
 import Modal from './Modal'
 import TableMoto from './TableMoto'
-import Filter from './Filter'
 import Button from './AddButton'
+import { postMotos } from '../../services/moto'
+
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 interface Moto {
   modelo: string
@@ -14,7 +17,7 @@ interface Moto {
 }
 
 interface ContentProps {
-  motos: Moto[] // Defina a tipagem correta para a lista de motos
+  motos: Moto[]
 }
 
 const Content: React.FC<ContentProps> = ({ motos }) => {
@@ -58,17 +61,42 @@ const Content: React.FC<ContentProps> = ({ motos }) => {
     }
   }
 
-  const handleAddVehicle = () => {
-    console.log('Dados do veículo:', formDataMoto)
-    setIsModalOpen(false)
+  const handleAddVehicle = async () => {
+    try {
+      const requestBody = {
+        moto: {
+          cilindrada: parseFloat(formDataMoto.cilindrada),
+        },
+        veiculo: {
+          modelo: formDataMoto.modelo,
+          fabricante: formDataMoto.fabricante,
+          ano: formDataMoto.ano.toString(),
+          preco: parseFloat(
+            formDataMoto.preco.replace(',', '').replace('.', ''),
+          ),
+        },
+      }
+
+      console.log('Enviando dados para a API:', requestBody)
+
+      const response = await postMotos(requestBody)
+
+      console.log('Resposta da API:', response)
+
+      setFormDataMoto(initialFormData)
+      setIsModalOpen(false)
+
+      toast.success('Moto cadastrada!')
+    } catch (error) {
+      console.error('Erro ao salvar a moto:', error)
+      toast.error('Erro ao cadastrar moto!')
+    }
   }
 
   return (
     <>
       <Button setIsModalOpen={setIsModalOpen} />
-      <Filter />
-      <TableMoto motos={motos} />{' '}
-      {/* Passando a lista de motos para o TableMoto */}
+      <TableMoto motos={motos} />
       <Modal
         isOpen={isModalOpen}
         title="Adicionar moto"

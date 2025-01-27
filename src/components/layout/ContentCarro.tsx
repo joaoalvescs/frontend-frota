@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { currentYear, formatPrice } from '../../utils/formatDate'
-import Modal from './Modal'
 
-import Filter from './Filter'
+import Modal from './Modal'
 import Button from './AddButton'
 import TableCarro from './TableCarro'
+
+import { currentYear, formatPrice } from '../../utils/formatDate'
 
 export interface Carro {
   modelo: string
@@ -68,8 +68,7 @@ const ContentCarro: React.FC<ContentProps> = ({ carros }) => {
   return (
     <>
       <Button setIsModalOpen={setIsModalOpen} />
-      <Filter />
-      <TableCarro carros={carros} />{' '}
+      <TableCarro carros={carros} />
       <Modal
         isOpen={isModalOpen}
         title="Adicionar carro"

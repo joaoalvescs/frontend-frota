@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   ModalOverlay,
   ModalContent,
@@ -22,15 +22,48 @@ const Modal: React.FC<ModalPropsMoto> = ({
   onSave,
   onInputChange,
 }) => {
-  if (!isOpen) return null
+  const [errors, setErrors] = useState({
+    modelo: '',
+    fabricante: '',
+    ano: '',
+    preco: '',
+    cilindrada: '',
+  })
 
   const combustiveis = ['Gasolina', 'Etanol', 'Diesel', 'Flex']
+
+  if (!isOpen) return null
+
+  const validateFields = () => {
+    const newErrors = {
+      modelo: formData.modelo.trim() === '' ? 'Modelo é obrigatório' : '',
+      fabricante:
+        formData.fabricante.trim() === '' ? 'Fabricante é obrigatório' : '',
+      ano: formData.ano.toString().trim() === '' ? 'Ano é obrigatório' : '',
+      preco: formData.preco.trim() === '' ? 'Preço é obrigatório' : '',
+      cilindrada:
+        type === 'moto' &&
+        (!formData.cilindrada || formData.cilindrada.trim() === '')
+          ? 'Cilindrada é obrigatória'
+          : '',
+    }
+    setErrors(newErrors)
+
+    return Object.values(newErrors).every((error) => error === '')
+  }
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (validateFields()) {
+      onSave()
+    }
+  }
 
   return (
     <ModalOverlay>
       <ModalContent>
         <TitleModal>{title}</TitleModal>
-        <form>
+        <form onSubmit={handleFormSubmit}>
           <Input
             type="text"
             name="modelo"
@@ -38,6 +71,9 @@ const Modal: React.FC<ModalPropsMoto> = ({
             value={formData.modelo}
             onChange={onInputChange}
           />
+          {errors.modelo && (
+            <span style={{ color: 'red' }}>{errors.modelo}</span>
+          )}
           <Input
             type="text"
             name="fabricante"
@@ -45,6 +81,9 @@ const Modal: React.FC<ModalPropsMoto> = ({
             value={formData.fabricante}
             onChange={onInputChange}
           />
+          {errors.fabricante && (
+            <span style={{ color: 'red' }}>{errors.fabricante}</span>
+          )}
           <Input
             type="number"
             name="ano"
@@ -52,6 +91,7 @@ const Modal: React.FC<ModalPropsMoto> = ({
             value={formData.ano}
             onChange={onInputChange}
           />
+          {errors.ano && <span style={{ color: 'red' }}>{errors.ano}</span>}
           <Input
             type="text"
             name="preco"
@@ -59,14 +99,20 @@ const Modal: React.FC<ModalPropsMoto> = ({
             value={formData.preco}
             onChange={onInputChange}
           />
+          {errors.preco && <span style={{ color: 'red' }}>{errors.preco}</span>}
           {type === 'moto' ? (
-            <Input
-              type="number"
-              name="cilindrada"
-              placeholder="Cilindrada"
-              value={formData.cilindrada || ''}
-              onChange={onInputChange}
-            />
+            <>
+              <Input
+                type="number"
+                name="cilindrada"
+                placeholder="Cilindrada"
+                value={formData.cilindrada || ''}
+                onChange={onInputChange}
+              />
+              {errors.cilindrada && (
+                <span style={{ color: 'red' }}>{errors.cilindrada}</span>
+              )}
+            </>
           ) : (
             <>
               <Input
@@ -96,7 +142,7 @@ const Modal: React.FC<ModalPropsMoto> = ({
           )}
           <ModalActions>
             <CancelButton onClick={onClose}>Cancelar</CancelButton>
-            <SaveButton onClick={onSave}>Salvar</SaveButton>
+            <SaveButton type="submit">Salvar</SaveButton>
           </ModalActions>
         </form>
       </ModalContent>
