@@ -145,6 +145,23 @@ export const Input = styled.input`
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+
+  &::placeholder {
+    color: #000000;
+  }
+`
+
+export const Select = styled.select`
+  width: 94%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`
+
+export const Option = styled.option`
+  font-size: 16px;
+  color: #333;
 `
 
 export const ModalActions = styled.div`

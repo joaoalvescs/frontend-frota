@@ -1,3 +1,5 @@
+export const currentYear = new Date().getFullYear()
+
 export const formatPrice = (value: string) => {
   const cleanedValue = value.replace(/[^\d,]/g, '')
   const parts = cleanedValue.split(',')

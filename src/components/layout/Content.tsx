@@ -1,21 +1,23 @@
-import React, { useState } from 'react'
-import { MdDelete, MdEdit } from 'react-icons/md'
+import React, { useEffect, useState } from 'react'
+
 import {
   AddButton,
   ContentIndex,
   ControlsContainer,
   FilterSelect,
   OkButton,
-  Table,
   TableContainer,
 } from '../../layouts/content'
+import { getMotos } from '../../services/moto'
+
 import Modal from './Modal'
-import { formatPrice } from '../../utils/formatDate'
+import TableMoto from './TableMoto'
+
+import { currentYear, formatPrice } from '../../utils/formatDate'
 
 export default function Content() {
-  const currentYear = new Date().getFullYear()
-
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [motos, setMotos] = useState([])
 
   const initialFormData = {
     modelo: '',
@@ -26,6 +28,20 @@ export default function Content() {
   }
 
   const [formDataMoto, setFormDataMoto] = useState(initialFormData)
+
+  useEffect(() => {
+    const fetchMotos = async () => {
+      try {
+        const motosData = await getMotos()
+        console.log('Motos:', motosData)
+        setMotos(motosData)
+      } catch (error) {
+        console.error('Erro ao buscar motos:', error)
+      }
+    }
+
+    fetchMotos()
+  }, [])
 
   const handleCancel = () => {
     setFormDataMoto(initialFormData)
@@ -78,37 +94,13 @@ export default function Content() {
             </FilterSelect>
             <OkButton>Ok</OkButton>
           </ControlsContainer>
-          <Table>
-            <thead>
-              <tr>
-                <th>Modelo</th>
-                <th>Fabricante</th>
-                <th>Ano</th>
-                <th>Preço</th>
-                <th>Editar</th>
-                <th>Apagar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Corolla</td>
-                <td>Toyota</td>
-                <td>2022</td>
-                <td>R$ 150.000,00</td>
-                <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
-                  <MdEdit />
-                </td>
-                <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
-                  <MdDelete />
-                </td>
-              </tr>
-            </tbody>
-          </Table>
+          <TableMoto motos={motos} />
         </TableContainer>
       </ContentIndex>
       <Modal
         isOpen={isModalOpen}
-        title="Adicionar veículo"
+        title="Adicionar moto"
+        type="carro"
         formData={{
           ...formDataMoto,
           ano: formDataMoto.ano.toString(),

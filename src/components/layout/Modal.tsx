@@ -7,32 +7,24 @@ import {
   Input,
   CancelButton,
   SaveButton,
+  Select,
+  Option,
 } from '../../layouts/content'
 
-interface ModalPropsMoto {
-  isOpen: boolean
-  title: string
-  formData: {
-    modelo: string
-    fabricante: string
-    ano: string
-    preco: string
-    cilindrada: string
-  }
-  onClose: () => void
-  onSave: () => void
-  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-}
+import { ModalPropsMoto } from '../../types/moto'
 
 const Modal: React.FC<ModalPropsMoto> = ({
   isOpen,
   title,
+  type,
   formData,
   onClose,
   onSave,
   onInputChange,
 }) => {
   if (!isOpen) return null
+
+  const combustiveis = ['Gasolina', 'Etanol', 'Diesel', 'Flex']
 
   return (
     <ModalOverlay>
@@ -67,13 +59,41 @@ const Modal: React.FC<ModalPropsMoto> = ({
             value={formData.preco}
             onChange={onInputChange}
           />
-          <Input
-            type="number"
-            name="cilindrada"
-            placeholder="Cilindrada"
-            value={formData.cilindrada}
-            onChange={onInputChange}
-          />
+          {type === 'moto' ? (
+            <Input
+              type="number"
+              name="cilindrada"
+              placeholder="Cilindrada"
+              value={formData.cilindrada || ''}
+              onChange={onInputChange}
+            />
+          ) : (
+            <>
+              <Input
+                type="number"
+                name="quantidadePortas"
+                placeholder="Quantidade de portas"
+                min={1}
+                max={20}
+                value={formData.quantidadePortas || ''}
+                onChange={onInputChange}
+              />
+              <Select
+                name="tipoCombustivel"
+                value={formData.tipoCombustivel || ''}
+                onChange={onInputChange}
+              >
+                <Option value="" disabled>
+                  Selecione o tipo de combustível
+                </Option>
+                {combustiveis.map((combustivel) => (
+                  <Option key={combustivel} value={combustivel}>
+                    {combustivel}
+                  </Option>
+                ))}
+              </Select>
+            </>
+          )}
           <ModalActions>
             <CancelButton onClick={onClose}>Cancelar</CancelButton>
             <SaveButton onClick={onSave}>Salvar</SaveButton>
