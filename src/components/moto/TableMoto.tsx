@@ -1,37 +1,37 @@
 import React from 'react'
 import { MdEdit } from 'react-icons/md'
+import { ToastContainer } from 'react-toastify'
 
 import { Table } from '../../layouts/content'
-import { TableCarroProps } from '../../types/carro'
+import { TableMotoProps } from '../../types/moto'
 
 import Apagar from '../veiculo/apagar'
 
-const TableCarro: React.FC<TableCarroProps> = ({ carros }) => {
+const TableMoto: React.FC<TableMotoProps> = ({ motos }) => {
   return (
     <Table>
+      <ToastContainer />
       <thead>
         <tr>
           <th>Modelo</th>
           <th>Fabricante</th>
-          <th>Combustível</th>
-          <th>Portas</th>
+          <th>Ano</th>
+          <th>Cilindradas</th>
           <th>Editar</th>
           <th>Apagar</th>
         </tr>
       </thead>
       <tbody>
-        {carros.map((carro, index) => (
+        {motos.map((moto, index) => (
           <tr key={index}>
-            <td>{carro.modelo}</td>
-            <td>{carro.fabricante}</td>
-            <td>{carro.tipoCombustivel}</td>
-            <td>{carro.quantidadePortas}</td>
+            <td>{moto.modelo}</td>
+            <td>{moto.fabricante}</td>
+            <td>{moto.ano}</td>
+            <td>{moto.cilindrada}</td>
             <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
               <MdEdit />
             </td>
-            {carro.veiculoId !== undefined && (
-              <Apagar motoId={carro.veiculoId} />
-            )}
+            {moto.veiculoId !== undefined && <Apagar motoId={moto.veiculoId} />}
           </tr>
         ))}
       </tbody>
@@ -39,4 +39,4 @@ const TableCarro: React.FC<TableCarroProps> = ({ carros }) => {
   )
 }
 
-export default TableCarro
+export default TableMoto

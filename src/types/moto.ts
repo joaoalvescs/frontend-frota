@@ -3,6 +3,7 @@ export interface ModalPropsMoto {
   title: string
   type: string
   formData: {
+    veiculoId: number
     modelo: string
     fabricante: string
     ano: string
@@ -17,6 +18,7 @@ export interface ModalPropsMoto {
 }
 
 export interface Moto {
+  veiculoId?: number
   modelo: string
   fabricante: string
   ano: number

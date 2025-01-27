@@ -1,4 +1,5 @@
 export interface Carro {
+  veiculoId?: number
   modelo: string
   fabricante: string
   ano: number

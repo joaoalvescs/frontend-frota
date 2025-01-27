@@ -33,3 +33,19 @@ export async function postMotos(data: {
     throw e
   }
 }
+
+export async function deleteMotos(id: number) {
+  try {
+    const response = await api.delete(`/veiculo/apagar/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    return response.data
+  } catch (error) {
+    const e = error as Error
+    console.error(`Erro ao cadastrar motos: ${e.message}`)
+    throw e
+  }
+}

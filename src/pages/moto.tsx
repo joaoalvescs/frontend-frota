@@ -12,8 +12,8 @@ import {
 import { Container } from '../layouts/app'
 import { getMotos } from '../services/moto'
 
-import ContentMoto from '../components/layout/ContentMoto'
 import { ToastContainer } from 'react-toastify'
+import ContentMoto from '../components/moto/ContentMoto'
 
 export default function Moto() {
   const [motos, setMotos] = useState<any[]>([])
