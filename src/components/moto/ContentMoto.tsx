@@ -6,10 +6,9 @@ import 'react-toastify/dist/ReactToastify.css'
 import { postMotos } from '../../services/moto'
 import { currentYear, formatPrice } from '../../utils/formatDate'
 
-import TableVeiculo from '../veiculo/TableVeiculo'
-
-import Modal from '../veiculo/Modal'
 import Button from '../layout/AddButton'
+import TableVeiculo from '../veiculo/TableVeiculo'
+import Modal from '../veiculo/Modal'
 
 interface Moto {
   modelo: string

@@ -38,14 +38,13 @@ const Modal: React.FC<ModalPropsMoto> = ({
 
   const validateFields = () => {
     const newErrors = {
-      modelo: formData.modelo.trim() === '' ? 'Modelo é obrigatório' : '',
-      fabricante:
-        formData.fabricante.trim() === '' ? 'Fabricante é obrigatório' : '',
-      ano: formData.ano.toString().trim() === '' ? 'Ano é obrigatório' : '',
-      preco: formData.preco.trim() === '' ? 'Preço é obrigatório' : '',
+      modelo: formData.modelo === '' ? 'Modelo é obrigatório' : '',
+      fabricante: formData.fabricante === '' ? 'Fabricante é obrigatório' : '',
+      ano: formData.ano === '' ? 'Ano é obrigatório' : '',
+      preco: formData.preco === '' ? 'Preço é obrigatório' : '',
       cilindrada:
         type === 'moto' &&
-        (!formData.cilindrada || formData.cilindrada.trim() === '')
+        (!formData.cilindrada || String(formData.cilindrada).trim() === '') // Convertendo para string antes de aplicar trim
           ? 'Cilindrada é obrigatória'
           : '',
       quantidadePortas:
@@ -161,10 +160,13 @@ const Modal: React.FC<ModalPropsMoto> = ({
               )}
             </>
           )}
-
           <ModalActions>
             <CancelButton onClick={onClose}>Cancelar</CancelButton>
-            <SaveButton type="submit">Salvar</SaveButton>
+            {title === 'Editar' ? (
+              <SaveButton type="submit"> Editar </SaveButton>
+            ) : (
+              <SaveButton type="submit"> Salvar </SaveButton>
+            )}
           </ModalActions>
         </form>
       </ModalContent>

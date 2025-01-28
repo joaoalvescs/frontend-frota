@@ -49,3 +49,28 @@ export async function deleteMotos(id: number) {
     throw e
   }
 }
+
+export async function putMotos(data: {
+  moto: { id: number; cilindrada: number }
+  veiculo: {
+    id: number
+    modelo: string
+    fabricante: string
+    ano: string
+    preco: number
+  }
+}) {
+  try {
+    const response = await api.put('/moto/atualizar', data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    return response.data
+  } catch (error) {
+    const e = error as Error
+    console.error(`Erro ao cadastrar motos: ${e.message}`)
+    throw e
+  }
+}

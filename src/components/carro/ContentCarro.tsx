@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 
+import { toast } from 'react-toastify'
+
+import { postCarros } from '../../services/carro'
+import { currentYear, formatPrice } from '../../utils/formatDate'
+
+import TableVeiculo from '../veiculo/TableVeiculo'
 import Modal from '../veiculo/Modal'
 import Button from '../layout/AddButton'
-import TableCarro from './TableCarro'
-
-import { currentYear, formatPrice } from '../../utils/formatDate'
-import { postCarros } from '../../services/carro'
-import { toast } from 'react-toastify'
 
 export interface Carro {
   veiculoId: number
@@ -96,7 +97,7 @@ const ContentCarro: React.FC<ContentProps> = ({ carros }) => {
   return (
     <>
       <Button setIsModalOpen={setIsModalOpen} />
-      <TableCarro carros={carros} />
+      <TableVeiculo veiculos={carros} tipo="carro" />
       <Modal
         isOpen={isModalOpen}
         title="Adicionar carro"

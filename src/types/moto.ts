@@ -1,21 +1,21 @@
-export interface ModalPropsMoto {
+export type ModalPropsMoto = {
   isOpen: boolean
   title: string
   type: 'moto' | 'carro'
-  formData: {
+  formData: Partial<{
     veiculoId: number
     modelo: string
     fabricante: string
-    ano: string
+    ano: string | number // Alteração aqui
     preco: string
-    cilindrada?: string
-    quantidadePortas?: number
-    tipoCombustivel?: string
-  }
+    cilindrada: string
+    quantidadePortas: number
+    tipoCombustivel: string
+  }>
   onClose: () => void
   onSave: () => void
   onInputChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void
 }
 
