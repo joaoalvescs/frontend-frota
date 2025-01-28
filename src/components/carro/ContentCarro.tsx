@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 
-import Modal from './Modal'
-import Button from './AddButton'
+import Modal from '../veiculo/Modal'
+import Button from '../layout/AddButton'
 import TableCarro from './TableCarro'
 
 import { currentYear, formatPrice } from '../../utils/formatDate'
+import { postCarros } from '../../services/carro'
+import { toast } from 'react-toastify'
 
 export interface Carro {
+  veiculoId: number
   modelo: string
   fabricante: string
   ano: number
@@ -23,11 +26,13 @@ const ContentCarro: React.FC<ContentProps> = ({ carros }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const initialFormData = {
+    veiculoId: 0,
     modelo: '',
     fabricante: '',
     ano: currentYear,
     preco: '',
-    cilindrada: '',
+    quantidadePortas: 0,
+    tipoCombustivel: '',
   }
 
   const [formDataMoto, setFormDataMoto] = useState(initialFormData)
@@ -37,7 +42,9 @@ const ContentCarro: React.FC<ContentProps> = ({ carros }) => {
     setIsModalOpen(false)
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target
 
     if (name === 'ano') {
@@ -48,21 +55,42 @@ const ContentCarro: React.FC<ContentProps> = ({ carros }) => {
     } else if (name === 'preco') {
       const formattedValue = formatPrice(value)
       setFormDataMoto({ ...formDataMoto, [name]: formattedValue })
-    } else if (name === 'cilindrada') {
-      const cilindrada = parseFloat(value)
-      if (!isNaN(cilindrada) && cilindrada > 1) {
-        setFormDataMoto({ ...formDataMoto, [name]: value })
-      } else {
-        console.warn('Cilindrada deve ser maior que 1!')
+    } else if (name === 'quantidadePortas') {
+      const portas = parseInt(value, 10)
+      if (!isNaN(portas) && portas > 0) {
+        setFormDataMoto({ ...formDataMoto, [name]: portas })
       }
     } else {
       setFormDataMoto({ ...formDataMoto, [name]: value })
     }
   }
 
-  const handleAddVehicle = () => {
-    console.log('Dados do veículo:', formDataMoto)
-    setIsModalOpen(false)
+  const handleAddVehicle = async () => {
+    const payload = {
+      carro: {
+        quantidadePortas: formDataMoto.quantidadePortas,
+        tipoCombustivel: formDataMoto.tipoCombustivel,
+      },
+      veiculo: {
+        modelo: formDataMoto.modelo,
+        fabricante: formDataMoto.fabricante,
+        ano: formDataMoto.ano.toString(),
+        preco: parseFloat(formDataMoto.preco.replace(',', '').replace('.', '')),
+      },
+    }
+
+    console.log('Payload enviado: ', payload)
+
+    try {
+      const response = await postCarros(payload)
+      console.log('Veículo cadastrado com sucesso:', response)
+      setIsModalOpen(false)
+      setFormDataMoto(initialFormData)
+
+      toast.success('Carro cadastrado!')
+    } catch (error) {
+      console.error('Erro ao cadastrar veículo:', error)
+    }
   }
 
   return (
@@ -75,6 +103,8 @@ const ContentCarro: React.FC<ContentProps> = ({ carros }) => {
         type="carro"
         formData={{
           ...formDataMoto,
+          quantidadePortas: formDataMoto.quantidadePortas || 0,
+          tipoCombustivel: formDataMoto.tipoCombustivel || '',
           ano: formDataMoto.ano.toString(),
         }}
         onClose={handleCancel}

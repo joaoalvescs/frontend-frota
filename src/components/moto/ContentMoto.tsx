@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
-import { currentYear, formatPrice } from '../../utils/formatDate'
-import Modal from '../layout/Modal'
-
-import Button from '../layout/AddButton'
-import { postMotos } from '../../services/moto'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import TableMoto from './TableMoto'
+
+import { postMotos } from '../../services/moto'
+import { currentYear, formatPrice } from '../../utils/formatDate'
+
+import TableVeiculo from '../veiculo/TableVeiculo'
+
+import Modal from '../veiculo/Modal'
+import Button from '../layout/AddButton'
 
 interface Moto {
   modelo: string
@@ -40,7 +42,9 @@ const Content: React.FC<ContentProps> = ({ motos }) => {
     setIsModalOpen(false)
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target
 
     if (name === 'ano') {
@@ -98,13 +102,14 @@ const Content: React.FC<ContentProps> = ({ motos }) => {
   return (
     <>
       <Button setIsModalOpen={setIsModalOpen} />
-      <TableMoto motos={motos} />
+      <TableVeiculo veiculos={motos} tipo="moto" />
       <Modal
         isOpen={isModalOpen}
         title="Adicionar moto"
         type="moto"
         formData={{
           ...formDataMoto,
+          cilindrada: formDataMoto.cilindrada || '',
           ano: formDataMoto.ano.toString(),
         }}
         onClose={handleCancel}

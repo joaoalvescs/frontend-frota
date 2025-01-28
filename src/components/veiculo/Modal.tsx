@@ -28,6 +28,8 @@ const Modal: React.FC<ModalPropsMoto> = ({
     ano: '',
     preco: '',
     cilindrada: '',
+    quantidadePortas: '',
+    tipoCombustivel: '',
   })
 
   const combustiveis = ['Gasolina', 'Etanol', 'Diesel', 'Flex']
@@ -45,6 +47,16 @@ const Modal: React.FC<ModalPropsMoto> = ({
         type === 'moto' &&
         (!formData.cilindrada || formData.cilindrada.trim() === '')
           ? 'Cilindrada é obrigatória'
+          : '',
+      quantidadePortas:
+        type === 'carro' &&
+        (!formData.quantidadePortas || formData.quantidadePortas <= 0)
+          ? 'Quantidade de portas é obrigatória'
+          : '',
+      tipoCombustivel:
+        type === 'carro' &&
+        (!formData.tipoCombustivel || formData.tipoCombustivel.trim() === '')
+          ? 'Tipo de combustível é obrigatório'
           : '',
     }
     setErrors(newErrors)
@@ -74,6 +86,7 @@ const Modal: React.FC<ModalPropsMoto> = ({
           {errors.modelo && (
             <span style={{ color: 'red' }}>{errors.modelo}</span>
           )}
+
           <Input
             type="text"
             name="fabricante"
@@ -84,6 +97,7 @@ const Modal: React.FC<ModalPropsMoto> = ({
           {errors.fabricante && (
             <span style={{ color: 'red' }}>{errors.fabricante}</span>
           )}
+
           <Input
             type="number"
             name="ano"
@@ -92,6 +106,7 @@ const Modal: React.FC<ModalPropsMoto> = ({
             onChange={onInputChange}
           />
           {errors.ano && <span style={{ color: 'red' }}>{errors.ano}</span>}
+
           <Input
             type="text"
             name="preco"
@@ -100,6 +115,7 @@ const Modal: React.FC<ModalPropsMoto> = ({
             onChange={onInputChange}
           />
           {errors.preco && <span style={{ color: 'red' }}>{errors.preco}</span>}
+
           {type === 'moto' ? (
             <>
               <Input
@@ -119,11 +135,12 @@ const Modal: React.FC<ModalPropsMoto> = ({
                 type="number"
                 name="quantidadePortas"
                 placeholder="Quantidade de portas"
-                min={1}
-                max={20}
                 value={formData.quantidadePortas || ''}
                 onChange={onInputChange}
               />
+              {errors.quantidadePortas && (
+                <span style={{ color: 'red' }}>{errors.quantidadePortas}</span>
+              )}
               <Select
                 name="tipoCombustivel"
                 value={formData.tipoCombustivel || ''}
@@ -138,8 +155,13 @@ const Modal: React.FC<ModalPropsMoto> = ({
                   </Option>
                 ))}
               </Select>
+
+              {errors.tipoCombustivel && (
+                <span style={{ color: 'red' }}>{errors.tipoCombustivel}</span>
+              )}
             </>
           )}
+
           <ModalActions>
             <CancelButton onClick={onClose}>Cancelar</CancelButton>
             <SaveButton type="submit">Salvar</SaveButton>

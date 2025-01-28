@@ -4,7 +4,7 @@ import { MdEdit } from 'react-icons/md'
 import { Table } from '../../layouts/content'
 import { TableCarroProps } from '../../types/carro'
 
-import Apagar from '../veiculo/apagar'
+import Apagar from '../veiculo/Apagar'
 
 const TableCarro: React.FC<TableCarroProps> = ({ carros }) => {
   return (

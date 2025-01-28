@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react'
+import { ToastContainer } from 'react-toastify'
 
 import { Container } from '../layouts/app'
-import SideBar from '../components/layout/SideBar'
 
 import {
   ContentIndex,
   ControlsContainer,
   TableContainer,
 } from '../layouts/content'
-
 import { getCarros } from '../services/carro'
-import ContentCarro from '../components/layout/ContentCarro'
+
+import ContentCarro from '../components/carro/ContentCarro'
+import SideBar from '../components/layout/SideBar'
 
 export default function Carro() {
   const [carros, setCarros] = useState<any[]>([])
@@ -35,6 +36,7 @@ export default function Carro() {
       <Container>
         <SideBar />
         <ContentIndex>
+          <ToastContainer />
           <TableContainer>
             <ControlsContainer>
               <ContentCarro carros={carros} />

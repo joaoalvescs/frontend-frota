@@ -1,7 +1,7 @@
 export interface ModalPropsMoto {
   isOpen: boolean
   title: string
-  type: string
+  type: 'moto' | 'carro'
   formData: {
     veiculoId: number
     modelo: string
@@ -14,7 +14,9 @@ export interface ModalPropsMoto {
   }
   onClose: () => void
   onSave: () => void
-  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onInputChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => void
 }
 
 export interface Moto {

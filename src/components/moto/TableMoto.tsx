@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify'
 import { Table } from '../../layouts/content'
 import { TableMotoProps } from '../../types/moto'
 
-import Apagar from '../veiculo/apagar'
+import Apagar from '../veiculo/Apagar'
 
 const TableMoto: React.FC<TableMotoProps> = ({ motos }) => {
   return (
