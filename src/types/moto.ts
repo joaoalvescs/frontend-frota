@@ -1,7 +1,7 @@
 export type ModalPropsMoto = {
   isOpen: boolean
   title: string
-  type: 'moto' | 'carro'
+  type: 'moto' | 'carro' | 'veiculo'
   formData: Partial<{
     veiculoId: number
     modelo: string

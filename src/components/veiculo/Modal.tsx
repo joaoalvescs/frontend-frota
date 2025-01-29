@@ -44,7 +44,7 @@ const Modal: React.FC<ModalPropsMoto> = ({
       preco: formData.preco === '' ? 'Preço é obrigatório' : '',
       cilindrada:
         type === 'moto' &&
-        (!formData.cilindrada || String(formData.cilindrada).trim() === '') // Convertendo para string antes de aplicar trim
+        (!formData.cilindrada || String(formData.cilindrada).trim() === '')
           ? 'Cilindrada é obrigatória'
           : '',
       quantidadePortas:

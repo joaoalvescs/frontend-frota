@@ -20,7 +20,7 @@ export const Table = styled.table`
     border: 1px solid #ddd;
     text-align: left;
     padding: 8px;
-    cursor: pointer;
+    // cursor: pointer;
   }
 
   th {
@@ -81,12 +81,21 @@ export const AddButton = styled.button`
   }
 `
 
+export const SearchInput = styled.input`
+  font-size: 14px;
+  padding: 15px 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 10px; /* Margem para separar do botão */
+  width: 30vw; /* Largura para o campo de pesquisa */
+`
+
 export const OkButton = styled.button`
   background-color: ${colors.blue};
   color: #ecf0f1;
   border: none;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 14px 20px;
+  font-size: 18px;
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
@@ -195,7 +204,7 @@ export const SaveButton = styled.button`
   margin-right: 20px;
 
   &:hover {
-    background-color: #27ae60;
+    background-color: #34495e;
   }
 `
 

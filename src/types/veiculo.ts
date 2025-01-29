@@ -1,7 +1,8 @@
 export interface Veiculo {
-  veiculoId?: number
+  id?: number
   motoId?: number
   carroId?: number
+  veiculoId?: number
   modelo: string
   fabricante: string
   ano: number
@@ -13,5 +14,5 @@ export interface Veiculo {
 
 export interface TableVeiculoProps {
   veiculos: Veiculo[]
-  tipo: 'moto' | 'carro'
+  tipo: 'moto' | 'carro' | 'veiculo'
 }

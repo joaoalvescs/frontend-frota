@@ -60,12 +60,34 @@ const TableVeiculo: React.FC<TableVeiculoProps> = ({ veiculos, tipo }) => {
         <ToastContainer />
         <thead>
           <tr>
-            <th>Modelo</th>
-            <th>Fabricante</th>
-            <th>{tipo === 'moto' ? 'Cilindradas' : 'Combustível'}</th>
-            <th>{tipo === 'moto' ? 'Ano' : 'Portas'}</th>
-            <th>Editar</th>
-            <th>Apagar</th>
+            {tipo === 'moto' ? (
+              <>
+                <th>Modelo</th>
+                <th>Fabricante</th>
+                <th>Ano</th>
+                <th>Cilindradas</th>
+                <th>Editar</th>
+                <th>Apagar</th>
+              </>
+            ) : tipo === 'carro' ? (
+              <>
+                <th>Modelo</th>
+                <th>Fabricante</th>
+                <th>Combustível</th>
+                <th>Portas</th>
+                <th>Editar</th>
+                <th>Apagar</th>
+              </>
+            ) : (
+              <>
+                <th>Modelo</th>
+                <th>Fabricante</th>
+                <th>Ano</th>
+                <th>Preço (R$) </th>
+                <th>Editar</th>
+                <th>Apagar</th>
+              </>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -74,16 +96,38 @@ const TableVeiculo: React.FC<TableVeiculoProps> = ({ veiculos, tipo }) => {
               <td>{veiculo.modelo}</td>
               <td>{veiculo.fabricante}</td>
               <td>
-                {tipo === 'moto' ? veiculo.cilindrada : veiculo.tipoCombustivel}
+                {tipo === 'moto'
+                  ? veiculo.ano
+                  : tipo === 'carro'
+                  ? veiculo.tipoCombustivel
+                  : veiculo.ano}
               </td>
               <td>
-                {tipo === 'moto' ? veiculo.ano : veiculo.quantidadePortas}
+                {tipo === 'moto'
+                  ? veiculo.cilindrada
+                  : tipo === 'carro'
+                  ? veiculo.quantidadePortas
+                  : new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    }).format(Number(veiculo.preco))}
               </td>
-              <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+              <td
+                style={{
+                  textAlign: 'center',
+                  verticalAlign: 'middle',
+                  cursor: 'pointer',
+                }}
+              >
                 <MdEdit onClick={() => handleEdit(veiculo)} />
               </td>
-              {veiculo.veiculoId !== undefined && (
-                <Apagar motoId={veiculo.veiculoId} />
+              {(tipo === 'veiculo' ? veiculo.id : veiculo.veiculoId) !==
+                undefined && (
+                <Apagar
+                  motoId={
+                    (tipo === 'veiculo' ? veiculo.id : veiculo.veiculoId) ?? 0
+                  }
+                />
               )}
             </tr>
           ))}

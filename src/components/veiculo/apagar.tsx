@@ -26,7 +26,13 @@ const Apagar: React.FC<ApagarProps> = ({ motoId }) => {
   }
 
   return (
-    <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+    <td
+      style={{
+        textAlign: 'center',
+        verticalAlign: 'middle',
+        cursor: 'pointer',
+      }}
+    >
       <MdDelete onClick={handleDelete} />
     </td>
   )
