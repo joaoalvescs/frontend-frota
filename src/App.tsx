@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 
-import { getVeiculos } from './services/veiculo'
+import { getVeiculos, searchVeiculos } from './services/veiculo'
 
 import {
   ContentIndex,
@@ -16,22 +16,31 @@ import { Container } from './layouts/app'
 import ContentVeiculo from './components/veiculo/ContentVeiculo'
 
 const Login: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [veiculos, setVeiculos] = useState<any[]>([])
+  const [veiculos, setVeiculos] = useState<never[]>([])
+  const [searchTerm, setSearchTerm] = useState<string>('')
 
   useEffect(() => {
-    const fetchMotos = async () => {
+    const fetchVeiculos = async () => {
       try {
         const veiculosData = await getVeiculos()
-        console.log('Motos:', veiculosData)
+        console.log('Veículos:', veiculosData)
         setVeiculos(veiculosData)
       } catch (error) {
-        console.error('Erro ao buscar motos:', error)
+        console.error('Erro ao buscar veículos:', error)
       }
     }
 
-    fetchMotos()
+    fetchVeiculos()
   }, [])
+
+  const handleSearch = async () => {
+    try {
+      const result = await searchVeiculos({ termo: searchTerm })
+      setVeiculos(result)
+    } catch (error) {
+      console.error('Erro ao buscar veículos:', error)
+    }
+  }
 
   return (
     <Container>
@@ -40,7 +49,7 @@ const Login: React.FC = () => {
         <ToastContainer />
         <TableContainer>
           <ControlsContainer>
-            <Filter />
+            <Filter setSearchTerm={setSearchTerm} onSearch={handleSearch} />
             <ContentVeiculo veiculos={veiculos} />
           </ControlsContainer>
         </TableContainer>

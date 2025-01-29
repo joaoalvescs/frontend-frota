@@ -8,6 +8,17 @@ export const ContentIndex = styled.div`
   flex: 1;
   padding: 20px;
 `
+export const Message = styled.div`
+  h2 {
+    color: ${colors.blue};
+    font-size: 30px;
+  }
+
+  p {
+    color: ${colors.blue};
+    font-size: 20px;
+  }
+`
 
 export const Table = styled.table`
   width: 90vw;
@@ -87,7 +98,7 @@ export const SearchInput = styled.input`
   border-radius: 5px;
   border: 1px solid #ccc;
   margin-right: 10px; /* Margem para separar do botão */
-  width: 30vw; /* Largura para o campo de pesquisa */
+  width: 25vw; /* Largura para o campo de pesquisa */
 `
 
 export const OkButton = styled.button`
