@@ -1,4 +1,5 @@
 import { api } from './api'
+import { Veiculo } from '../types/veiculo'
 
 export async function getCarros() {
   try {
@@ -33,3 +34,43 @@ export async function postCarros(data: {
     throw e
   }
 }
+
+export async function putCarros(data: {
+  carro: { id: number; quantidadePortas: number; tipoCombustivel: string }
+  veiculo: {
+    id: number
+    modelo: string
+    fabricante: string
+    ano: string
+    preco: number
+  }
+}) {
+  try {
+    const response = await api.put('/carro/atualizar', data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    return response.data
+  } catch (error) {
+    const e = error as Error
+    console.error(`Erro ao cadastrar motos: ${e.message}`)
+    throw e
+  }
+}
+
+export const buildCarroData = (veiculo: Veiculo) => ({
+  carro: {
+    id: veiculo.carroId || 0,
+    quantidadePortas: veiculo.quantidadePortas || 0,
+    tipoCombustivel: veiculo.tipoCombustivel || '',
+  },
+  veiculo: {
+    id: veiculo.veiculoId || 0,
+    modelo: veiculo.modelo,
+    fabricante: veiculo.fabricante,
+    ano: String(veiculo.ano),
+    preco: parseFloat(veiculo.preco),
+  },
+})

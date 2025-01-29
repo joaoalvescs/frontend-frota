@@ -2,30 +2,15 @@ import React, { useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { MdEdit } from 'react-icons/md'
 
-import { putMotos } from '../../services/moto'
+import { buildMotoData, putMotos } from '../../services/moto'
+import { buildCarroData, putCarros } from '../../services/carro'
+
+import { TableVeiculoProps, Veiculo } from '../../types/veiculo'
 
 import { Table } from '../../layouts/content'
 
 import Apagar from './Apagar'
 import Modal from './Modal'
-
-interface Veiculo {
-  veiculoId?: number
-  motoId?: number
-  carroId?: number
-  modelo: string
-  fabricante: string
-  ano: number
-  preco: string
-  cilindrada?: string
-  quantidadePortas?: number
-  tipoCombustivel?: string
-}
-
-interface TableVeiculoProps {
-  veiculos: Veiculo[]
-  tipo: 'moto' | 'carro'
-}
 
 const TableVeiculo: React.FC<TableVeiculoProps> = ({ veiculos, tipo }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -36,33 +21,20 @@ const TableVeiculo: React.FC<TableVeiculoProps> = ({ veiculos, tipo }) => {
     setIsModalOpen(true)
   }
 
-  /*
-  const handleSave = () => {
-    console.log('Veículo salvo', selectedVeiculo)
-    setIsModalOpen(false)
-  } */
-
   const handleSave = async () => {
     if (selectedVeiculo) {
       try {
-        const veiculoData = {
-          moto: {
-            id: selectedVeiculo.motoId || 0,
-            cilindrada: selectedVeiculo.cilindrada
-              ? parseInt(selectedVeiculo.cilindrada)
-              : 0,
-          },
-          veiculo: {
-            id: selectedVeiculo.veiculoId || 0,
-            modelo: selectedVeiculo.modelo,
-            fabricante: selectedVeiculo.fabricante,
-            ano: String(selectedVeiculo.ano),
-            preco: parseFloat(selectedVeiculo.preco),
-          },
+        let veiculoData
+
+        if (tipo === 'moto') {
+          veiculoData = buildMotoData(selectedVeiculo)
+          await putMotos(veiculoData)
+        } else {
+          veiculoData = buildCarroData(selectedVeiculo)
+          await putCarros(veiculoData)
         }
 
-        const response = await putMotos(veiculoData)
-        console.log('Veículo atualizado com sucesso:', response)
+        console.log('Veículo atualizado com sucesso:', veiculoData)
         setIsModalOpen(false)
       } catch (error) {
         console.error('Erro ao salvar veículo', error)

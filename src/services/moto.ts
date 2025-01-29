@@ -1,4 +1,5 @@
 import { api } from './api'
+import { Veiculo } from '../types/veiculo'
 
 export async function getMotos() {
   try {
@@ -74,3 +75,17 @@ export async function putMotos(data: {
     throw e
   }
 }
+
+export const buildMotoData = (veiculo: Veiculo) => ({
+  moto: {
+    id: veiculo.motoId || 0,
+    cilindrada: veiculo.cilindrada ? parseInt(veiculo.cilindrada) : 0,
+  },
+  veiculo: {
+    id: veiculo.veiculoId || 0,
+    modelo: veiculo.modelo,
+    fabricante: veiculo.fabricante,
+    ano: String(veiculo.ano),
+    preco: parseFloat(veiculo.preco),
+  },
+})

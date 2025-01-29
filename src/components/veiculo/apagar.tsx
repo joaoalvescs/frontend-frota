@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { toast } from 'react-toastify'
+// import { toast } from 'react-toastify'
 import { MdDelete } from 'react-icons/md'
 
 import { deleteMotos } from '../../services/moto'
@@ -14,7 +14,7 @@ const Apagar: React.FC<ApagarProps> = ({ motoId }) => {
     try {
       if (motoId) {
         await deleteMotos(motoId)
-        toast.success('Veículo apagado!')
+        // toast.success('Veículo apagado!')
       } else {
         console.error('motoId is undefined')
       }

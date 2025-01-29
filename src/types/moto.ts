@@ -6,7 +6,7 @@ export type ModalPropsMoto = {
     veiculoId: number
     modelo: string
     fabricante: string
-    ano: string | number // Alteração aqui
+    ano: string | number
     preco: string
     cilindrada: string
     quantidadePortas: number
