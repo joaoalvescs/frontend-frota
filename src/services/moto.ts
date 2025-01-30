@@ -78,14 +78,14 @@ export async function putMotos(data: {
 
 export const buildMotoData = (veiculo: Veiculo) => ({
   moto: {
-    id: veiculo.motoId || 0,
+    id: veiculo.motoId ?? veiculo.veiculoId ?? 0,
     cilindrada: veiculo.cilindrada ? parseInt(veiculo.cilindrada) : 0,
   },
   veiculo: {
-    id: veiculo.veiculoId || 0,
+    id: veiculo.veiculoId ?? veiculo.motoId ?? 0,
     modelo: veiculo.modelo,
     fabricante: veiculo.fabricante,
     ano: String(veiculo.ano),
-    preco: parseFloat(veiculo.preco),
+    preco: parseFloat(veiculo.preco.toString()),
   },
 })

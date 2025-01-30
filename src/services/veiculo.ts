@@ -58,11 +58,11 @@ export async function putVeiculos(data: {
 export const buildVeiculoData = (veiculo: Veiculo) => {
   return {
     veiculo: {
-      id: veiculo.id, // No caso de "veiculoId", seria veiculo.id
+      id: veiculo.id ?? 0,
       modelo: veiculo.modelo,
       fabricante: veiculo.fabricante,
-      ano: String(veiculo.ano), // Certifique-se de que o ano seja uma string
-      preco: parseFloat(veiculo.preco.toString()), // Garanta que o preco seja numérico
+      ano: String(veiculo.ano),
+      preco: parseFloat(veiculo.preco),
     },
   }
 }

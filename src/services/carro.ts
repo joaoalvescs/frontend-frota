@@ -62,15 +62,15 @@ export async function putCarros(data: {
 
 export const buildCarroData = (veiculo: Veiculo) => ({
   carro: {
-    id: veiculo.carroId || 0,
+    id: veiculo.carroId ?? veiculo.veiculoId ?? 0,
     quantidadePortas: veiculo.quantidadePortas || 0,
     tipoCombustivel: veiculo.tipoCombustivel || '',
   },
   veiculo: {
-    id: veiculo.veiculoId || 0,
+    id: veiculo.veiculoId ?? veiculo.carroId ?? 0,
     modelo: veiculo.modelo,
     fabricante: veiculo.fabricante,
     ano: String(veiculo.ano),
-    preco: parseFloat(veiculo.preco),
+    preco: parseFloat(veiculo.preco.toString()),
   },
 })

@@ -24,34 +24,37 @@ const TableVeiculo: React.FC<TableVeiculoProps> = ({ veiculos, tipo }) => {
   }
 
   const handleSave = async () => {
-    if (selectedVeiculo) {
-      console.log('selected veiculo: ' + JSON.stringify(selectedVeiculo))
+    if (!selectedVeiculo) return
 
-      if (selectedVeiculo.id === undefined) {
-        console.error('ID do veículo é indefinido')
-        return
+    console.log('selected veiculo: ', JSON.stringify(selectedVeiculo))
+
+    if (
+      tipo === 'veiculo' &&
+      (selectedVeiculo.id === undefined || selectedVeiculo.id === null)
+    ) {
+      console.error('ID do veículo é indefinido e não pode ser salvo.')
+      return
+    }
+
+    try {
+      let veiculoData
+
+      if (tipo === 'moto') {
+        veiculoData = buildMotoData(selectedVeiculo)
+        await putMotos(veiculoData)
+      } else if (tipo === 'carro') {
+        veiculoData = buildCarroData(selectedVeiculo)
+        await putCarros(veiculoData)
+      } else {
+        veiculoData = buildVeiculoData(selectedVeiculo)
+        console.log('Payload enviado para API:', JSON.stringify(veiculoData))
+        await putVeiculos(veiculoData)
       }
 
-      try {
-        let veiculoData
-
-        console.log('tipo: ' + tipo)
-        if (tipo === 'moto') {
-          veiculoData = buildMotoData(selectedVeiculo)
-          await putMotos(veiculoData)
-        } else if (tipo === 'carro') {
-          veiculoData = buildCarroData(selectedVeiculo)
-          await putCarros(veiculoData)
-        } else if (tipo === 'veiculo') {
-          veiculoData = buildVeiculoData(selectedVeiculo) // Garantir que o "veiculo" esteja correto
-          await putVeiculos(veiculoData) // Enviar para a API
-        }
-
-        console.log('Veículo atualizado com sucesso:', veiculoData)
-        setIsModalOpen(false)
-      } catch (error) {
-        console.error('Erro ao salvar veículo', error)
-      }
+      console.log('Veículo atualizado com sucesso:', veiculoData)
+      setIsModalOpen(false)
+    } catch (error) {
+      console.error('Erro ao salvar veículo', error)
     }
   }
 
