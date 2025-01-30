@@ -4,6 +4,7 @@ import { MdEdit } from 'react-icons/md'
 
 import { buildMotoData, putMotos } from '../../services/moto'
 import { buildCarroData, putCarros } from '../../services/carro'
+import { buildVeiculoData, putVeiculos } from '../../services/veiculo'
 
 import { TableVeiculoProps, Veiculo } from '../../types/veiculo'
 
@@ -11,6 +12,7 @@ import { Table } from '../../layouts/content'
 
 import Apagar from './Apagar'
 import Modal from './Modal'
+import TableColumns from './TableColumns'
 
 const TableVeiculo: React.FC<TableVeiculoProps> = ({ veiculos, tipo }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -23,15 +25,26 @@ const TableVeiculo: React.FC<TableVeiculoProps> = ({ veiculos, tipo }) => {
 
   const handleSave = async () => {
     if (selectedVeiculo) {
+      console.log('selected veiculo: ' + JSON.stringify(selectedVeiculo))
+
+      if (selectedVeiculo.id === undefined) {
+        console.error('ID do veículo é indefinido')
+        return
+      }
+
       try {
         let veiculoData
 
+        console.log('tipo: ' + tipo)
         if (tipo === 'moto') {
           veiculoData = buildMotoData(selectedVeiculo)
           await putMotos(veiculoData)
-        } else {
+        } else if (tipo === 'carro') {
           veiculoData = buildCarroData(selectedVeiculo)
           await putCarros(veiculoData)
+        } else if (tipo === 'veiculo') {
+          veiculoData = buildVeiculoData(selectedVeiculo) // Garantir que o "veiculo" esteja correto
+          await putVeiculos(veiculoData) // Enviar para a API
         }
 
         console.log('Veículo atualizado com sucesso:', veiculoData)
@@ -49,46 +62,16 @@ const TableVeiculo: React.FC<TableVeiculoProps> = ({ veiculos, tipo }) => {
     if (selectedVeiculo) {
       setSelectedVeiculo({
         ...selectedVeiculo,
-        [name]: value,
+        [name]: name === 'preco' ? Number(value) : value,
       })
     }
   }
-
   return (
     <>
       <Table>
         <ToastContainer />
         <thead>
-          <tr>
-            {tipo === 'moto' ? (
-              <>
-                <th>Modelo</th>
-                <th>Fabricante</th>
-                <th>Ano</th>
-                <th>Cilindradas</th>
-                <th>Editar</th>
-                <th>Apagar</th>
-              </>
-            ) : tipo === 'carro' ? (
-              <>
-                <th>Modelo</th>
-                <th>Fabricante</th>
-                <th>Combustível</th>
-                <th>Portas</th>
-                <th>Editar</th>
-                <th>Apagar</th>
-              </>
-            ) : (
-              <>
-                <th>Modelo</th>
-                <th>Fabricante</th>
-                <th>Ano</th>
-                <th>Preço (R$) </th>
-                <th>Editar</th>
-                <th>Apagar</th>
-              </>
-            )}
-          </tr>
+          <TableColumns tipo={tipo} />
         </thead>
         <tbody>
           {veiculos.map((veiculo, index) => (

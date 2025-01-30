@@ -115,7 +115,7 @@ const Modal: React.FC<ModalPropsMoto> = ({
           />
           {errors.preco && <span style={{ color: 'red' }}>{errors.preco}</span>}
 
-          {type === 'moto' ? (
+          {type === 'moto' && (
             <>
               <Input
                 type="number"
@@ -128,7 +128,9 @@ const Modal: React.FC<ModalPropsMoto> = ({
                 <span style={{ color: 'red' }}>{errors.cilindrada}</span>
               )}
             </>
-          ) : (
+          )}
+
+          {type === 'carro' && (
             <>
               <Input
                 type="number"
@@ -154,18 +156,18 @@ const Modal: React.FC<ModalPropsMoto> = ({
                   </Option>
                 ))}
               </Select>
-
               {errors.tipoCombustivel && (
                 <span style={{ color: 'red' }}>{errors.tipoCombustivel}</span>
               )}
             </>
           )}
+
           <ModalActions>
             <CancelButton onClick={onClose}>Cancelar</CancelButton>
             {title === 'Editar' ? (
-              <SaveButton type="submit"> Editar </SaveButton>
+              <SaveButton type="submit">Editar</SaveButton>
             ) : (
-              <SaveButton type="submit"> Salvar </SaveButton>
+              <SaveButton type="submit">Salvar</SaveButton>
             )}
           </ModalActions>
         </form>
