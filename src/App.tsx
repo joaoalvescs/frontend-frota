@@ -47,14 +47,14 @@ const Login: React.FC = () => {
       <ContentIndex>
         <ToastContainer />
         <TableContainer>
-          <Filter
-            setSearchTerm={setSearchTerm}
-            onSearch={handleSearch}
-            placeholderTitle="Filtrar veículo por ano, modelo ou fabricante"
-          />
           <ControlsContainer>
-            <ContentVeiculo veiculos={veiculos} />
+            <Filter
+              setSearchTerm={setSearchTerm}
+              onSearch={handleSearch}
+              placeholderTitle="Filtrar veículo por ano, modelo ou fabricante"
+            />
           </ControlsContainer>
+          <ContentVeiculo veiculos={veiculos} />
         </TableContainer>
       </ContentIndex>
     </Container>
