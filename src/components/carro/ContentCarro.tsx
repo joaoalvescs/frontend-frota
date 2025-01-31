@@ -7,6 +7,7 @@ import { currentYear, formatPrice } from '../../utils/formatDate'
 
 import TableVeiculo from '../veiculo/TableVeiculo'
 import Modal from '../veiculo/Modal'
+import NoResultsMessage from '../layout/NoResultMessage'
 
 export interface Carro {
   veiculoId: number
@@ -93,13 +94,15 @@ const ContentCarro: React.FC<ContentProps> = ({
       setIsModalOpen(false)
       setFormDataCarro(initialFormData)
 
-      // toast.success('Carro cadastrado!')
-
-      window.location.reload()
+      toast.success('Carro cadastrado!')
     } catch (error) {
       console.error('Erro ao cadastrar veículo:', error)
       toast.error('Erro ao cadastrar carro!')
     }
+  }
+
+  if (carros.length === 0) {
+    return <NoResultsMessage />
   }
 
   return (

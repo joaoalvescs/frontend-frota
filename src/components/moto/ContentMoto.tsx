@@ -8,6 +8,7 @@ import { currentYear, formatPrice } from '../../utils/formatDate'
 
 import TableVeiculo from '../veiculo/TableVeiculo'
 import Modal from '../veiculo/Modal'
+import NoResultsMessage from '../layout/NoResultMessage'
 
 interface Moto {
   modelo: string
@@ -99,6 +100,10 @@ const Content: React.FC<ContentProps> = ({
       console.error('Erro ao salvar a moto:', error)
       toast.error('Erro ao cadastrar moto!')
     }
+  }
+
+  if (motos.length === 0) {
+    return <NoResultsMessage />
   }
 
   return (
