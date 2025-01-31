@@ -8,11 +8,10 @@ import {
   ControlsContainer,
   TableContainer,
 } from './layouts/content'
-import SideBar from './components/layout/SideBar'
-import Filter from './components/layout/Filter'
-
 import { Container } from './layouts/app'
 
+import SideBar from './components/layout/SideBar'
+import Filter from './components/layout/Filter'
 import ContentVeiculo from './components/veiculo/ContentVeiculo'
 
 const Login: React.FC = () => {
@@ -48,8 +47,12 @@ const Login: React.FC = () => {
       <ContentIndex>
         <ToastContainer />
         <TableContainer>
+          <Filter
+            setSearchTerm={setSearchTerm}
+            onSearch={handleSearch}
+            placeholderTitle="Filtrar veículo por ano, modelo ou fabricante"
+          />
           <ControlsContainer>
-            <Filter setSearchTerm={setSearchTerm} onSearch={handleSearch} />
             <ContentVeiculo veiculos={veiculos} />
           </ControlsContainer>
         </TableContainer>

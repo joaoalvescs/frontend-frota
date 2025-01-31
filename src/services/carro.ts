@@ -60,6 +60,20 @@ export async function putCarros(data: {
   }
 }
 
+export async function searchCarros(data: { termo: string }) {
+  try {
+    const response = await api.post(`/carro/pesquisar`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    return response.data
+  } catch (error) {
+    console.error(`Erro ao buscar carros:`, error)
+    return []
+  }
+}
+
 export const buildCarroData = (veiculo: Veiculo) => ({
   carro: {
     id: veiculo.carroId ?? veiculo.veiculoId ?? 0,

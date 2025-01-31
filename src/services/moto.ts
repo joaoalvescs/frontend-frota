@@ -76,6 +76,20 @@ export async function putMotos(data: {
   }
 }
 
+export async function searchMotos(data: { termo: string }) {
+  try {
+    const response = await api.post(`/moto/pesquisar`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    return response.data
+  } catch (error) {
+    console.error(`Erro ao buscar motos:`, error)
+    return []
+  }
+}
+
 export const buildMotoData = (veiculo: Veiculo) => ({
   moto: {
     id: veiculo.motoId ?? veiculo.veiculoId ?? 0,

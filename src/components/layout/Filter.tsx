@@ -4,15 +4,20 @@ import { OkButton, SearchInput } from '../../layouts/content'
 interface FilterProps {
   setSearchTerm: (term: string) => void
   onSearch: () => void
+  placeholderTitle: string
 }
 
-export default function Filter({ setSearchTerm, onSearch }: FilterProps) {
+export default function Filter({
+  setSearchTerm,
+  onSearch,
+  placeholderTitle,
+}: FilterProps) {
   const [inputValue, setInputValue] = useState('')
 
   return (
     <>
       <SearchInput
-        placeholder="Filtrar por ano, modelo ou fabricante"
+        placeholder={placeholderTitle}
         value={inputValue}
         onChange={(e) => {
           setInputValue(e.target.value)

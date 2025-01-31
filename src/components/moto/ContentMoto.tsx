@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import { postMotos } from '../../services/moto'
 import { currentYear, formatPrice } from '../../utils/formatDate'
 
-import Button from '../layout/AddButton'
 import TableVeiculo from '../veiculo/TableVeiculo'
 import Modal from '../veiculo/Modal'
 
@@ -20,11 +19,15 @@ interface Moto {
 
 interface ContentProps {
   motos: Moto[]
+  isModalOpen: boolean
+  setIsModalOpen: (isOpen: boolean) => void
 }
 
-const Content: React.FC<ContentProps> = ({ motos }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
+const Content: React.FC<ContentProps> = ({
+  motos,
+  isModalOpen,
+  setIsModalOpen,
+}) => {
   const initialFormData = {
     veiculoId: 0,
     modelo: '',
@@ -100,7 +103,6 @@ const Content: React.FC<ContentProps> = ({ motos }) => {
 
   return (
     <>
-      <Button setIsModalOpen={setIsModalOpen} />
       <TableVeiculo veiculos={motos} tipo="moto" />
       <Modal
         isOpen={isModalOpen}

@@ -80,7 +80,7 @@ export const AddButton = styled.button`
   background-color: ${colors.blue};
   color: #ecf0f1;
   border: none;
-  padding: 10px 20px;
+  padding: 16px 24px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 5px;
@@ -111,7 +111,6 @@ export const OkButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-left: 16px;
 
   &:hover {
     background-color: #34495e;
@@ -119,11 +118,12 @@ export const OkButton = styled.button`
 `
 
 export const ControlsContainer = styled.div`
-  width: 45vw;
-  display: flex-start;
+  display: flex;
   justify-content: flex-start; /* Alinha os itens no início */
   align-items: center; /* Alinha verticalmente */
-  width: 45%; /* Opcional: controla o tamanho */
+  gap: 1rem; /* Espaçamento entre os elementos */
+  width: 100%; /* Ocupa toda a largura disponível */
+  margin-bottom: 1rem; /* Espaçamento abaixo do container */
 `
 
 export const FilterSelect = styled.select`

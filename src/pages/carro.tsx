@@ -9,13 +9,17 @@ import {
   ControlsContainer,
   TableContainer,
 } from '../layouts/content'
-import { getCarros } from '../services/carro'
+import { getCarros, searchCarros } from '../services/carro'
 
 import ContentCarro from '../components/carro/ContentCarro'
 import SideBar from '../components/layout/SideBar'
+import Filter from '../components/layout/Filter'
+import Button from '../components/layout/AddButton'
 
 export default function Carro() {
   const [carros, setCarros] = useState<any[]>([])
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     const fetchCarros = async () => {
@@ -31,6 +35,15 @@ export default function Carro() {
     fetchCarros()
   }, [])
 
+  const handleSearch = async () => {
+    try {
+      const result = await searchCarros({ termo: searchTerm })
+      setCarros(result)
+    } catch (error) {
+      console.error('Erro ao buscar veículos:', error)
+    }
+  }
+
   return (
     <>
       <Container>
@@ -39,8 +52,18 @@ export default function Carro() {
           <ToastContainer />
           <TableContainer>
             <ControlsContainer>
-              <ContentCarro carros={carros} />
+              <Filter
+                setSearchTerm={setSearchTerm}
+                onSearch={handleSearch}
+                placeholderTitle="Filtrar carro por ano, modelo ou fabricante"
+              />
+              <Button setIsModalOpen={setIsModalOpen} />
             </ControlsContainer>
+            <ContentCarro
+              carros={carros}
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+            />
           </TableContainer>
         </ContentIndex>
       </Container>
